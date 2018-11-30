@@ -4128,7 +4128,14 @@ func parseDictionaryHelper(fromString: String, function: String = #function) -> 
   } else {
       potentialDictionary = fromString
   }
-  let dictionary: [String : Any] = try! JSONSerialization.jsonObject(with: potentialDictionary.data(using: .utf8)!, options: []) as! [String : Any]
+  let dictionary: [String: Any]
+  do {
+    dictionary = try JSONSerialization.jsonObject(with: potentialDictionary.data(using: .utf8)!, options: []) as! [String : Any]
+  } catch {
+    println(error)
+    dictionary = [String:Any]()
+  }
+    
   return dictionary
 }
 
